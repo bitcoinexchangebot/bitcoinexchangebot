@@ -1,0 +1,21 @@
+{
+   "background": {
+      "scripts": [ "js/sha256.js", "js/hmac-sha512.js", "js/strftime.js", "js/sha512.js", "js/jquery-2.0.0.min.js", "js/bot.js", "js/mail.js", "js/background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+   },
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "description": "Bitcoin Exchange Bot",
+   "icons": {
+      "256": "icon.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxk8o73++tRq6E+Cejr+sjthUsRJQhbUFOIxoXtb/KxtcY8xjsUx7H833KUb8Kk1+r8NJBGFsSddn9XNrnkDb+JSMQHofj6Lol8FEyu5yggdRDt7PCUexTpmmZEliA3n5Uyzza9+SGiu75QMmFlimba2H5lOSUu7JGIjFNAFC1JHzir7DR8k8bsU2xx9yJOKIGhNOAJ2BQ8lt5TkTGbCgxOrwFqS48Eovs9/+yc4umhI+7EQCzaq8sRbBEhqUr7kiPFZq4aVFm4oSiiVSNPAyWZy+drA+QsEGQssUEHXxved+TAAqZDJPlP2jKwKeJjbzdaVH+DbQ13rWeegv95V39QIDAQAB",
+   "manifest_version": 2,
+   "name": "Bitcoin Exchange Bot",
+   "options_page": "options.html",
+   "permissions": [ "https://data.mtgox.com/", "https://btc-e.com/", "https://www.bitstamp.net/", "https://butter-bot.com/" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "2.5.1"
+}

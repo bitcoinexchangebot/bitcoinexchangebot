@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/screen.css" rel="stylesheet" type="text/css" media="screen" />
+      <script src="js/jquery-2.0.0.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/organictabs.jquery.js"></script>
+      <script type="text/javascript" src="EJSChart/EJSChart.js"></script>
+      <script type="text/javascript" src="js/graph.js"></script>
+  </head>
+  <body class="popup">
+  <div id="popup_box">
+      <div class="alert border1" id="setup" style="display: none">
+        <div>
+            <h4>Welcome, we are almost ready to start!</h4>
+
+            <p>
+                Please enter your license key and your preferred settings on the <a href="options.html" target="_blank">options page</a> to start the bot. You can purchase a license at <a href="http://bitcoinexchangebot.com/buy">http://bitcoinexchangebot.com/buy</a> if you have not already.
+            </p><p>
+                If you have any problems with the bot, please email <a href="mailto:support@BitcoinExchangeBot.com">support@BitcoinExchangeBot.com</a> for immediate support.
+            </p>
+
+        </div>
+      </div>
+
+
+
+      <div class="container" id="content">
+        <div id="errors">
+        </div>
+        <div id="update" class="border1 alert alert-notice">
+            There is a new version available. <a target="_blank" id="update_download_link">Download</a>
+        </div>
+
+        <div>
+          <div id="trading-disabled" class="border1 alert">
+              Trading is currently disabled. <a href="" id="enable_trading_link">Enable</a>
+          </div>
+          <div id="btce-disabled" class="border1 alert">
+              BTC-e trading is currently disabled. <a href="" id="enable_btce_trading_link">Enable</a>
+          </div>
+          <div id="mtgox-disabled" class="border1 alert">
+              MtGox trading is currently disabled. <a href="" id="enable_mtgox_trading_link">Enable</a>
+          </div>
+          <div id="bitstamp-disabled" class="border1 alert">
+              Bitstamp trading is currently disabled. <a href="" id="enable_bitstamp_trading_link">Enable</a>
+          </div>
+        </div>
+
+          <div class="row-popup">
+            <div id="tab-2">
+              <div class="left">
+                  <ul class="nav">
+                    <li class="nav-one"><a href="#mtgox" class="current">MtGox</a></li>
+                    <li class="nav-two"><a href="#btce">BTC-e</a></li>
+                    <li class="nav-three"><a href="#bitstamp">Bitstamp</a></li>
+                  </ul>
+              </div>
+              <div class="right">
+                <ul>
+                    <li style="display: none" id="status_ok" class="status"><img data-html="true" data-placement="bottom" src="img/ico-click.png" width="16" height="15" border="0" /></li>
+                    <li style="display: none" id="status_warning" class="status"><img data-html="true" data-placement="bottom" src="img/ico-warn.png" width="16" height="15" border="0" /></li>
+                    <li>
+                        <a href="#" id="disable_trading_icon" title="Disable trading"><img src="img/ico-puse.png" width="12" height="14" border="0"/></a>
+                        <a href="#" id="enable_trading_icon" title="Enable trading" style="display: none"><img src="img/ico-play.png" border="0"/></a>
+                    </li>
+                    <li><a href="options.html" title="Options" target="_blank"><img src="img/ico-setting.png" width="16" height="17" border="0" /></a></li>
+                </ul>
+              </div>
+
+            <div class="list-wrap">
+              <div id="mtgox">
+                  <div class="row-popup border1">
+                      <div id="mtgox-graph" style="width:465px; height:230px;"></div>
+                  </div>
+                  <div class="row-popup balance" id="mtgox-balance">
+                      Balance = <span id="mtgox_btc">0.00</span> BTC + <span id="mtgox_fiat">0.00</span> <span id="mtgox_currency">USD</span>
+                  </div>
+
+                  <div class="row-popup loading" id="mtgox-data-loading">
+                      <h4>Loading data...</h4>
+                  </div>
+                <div class="row-popup list" id="mtgox-data-container">
+                    <div class="row-popup header">
+                       <div class="col2 col3-heading ">TIME</div>
+                       <div class="col2 col4-heading">PRICE (<span id="mtgox_ticker_currency">USD</span>)</div>
+                       <div class="col2 col5-heading">EMA (<span class="ema_short">a</span>)</div>
+                       <div class="col2 col6-heading">EMA (<span class="ema_long">b</span>)</div>
+                       <div class="col2 col7-heading">DIFF</div>
+                    </div>
+                </div>
+              </div>
+
+              <div id="btce" class="hide" style="display: none">
+                  <div class="row-popup border1">
+                      <div id="btce-graph" style="width:465px; height:230px;"></div>
+                  </div>
+                  <div class="row-popup balance" id="btce-balance">
+                      Balance = <span id="btce_btc">0.00</span> BTC + <span id="btce_fiat">0.00</span> USD</span>
+                  </div>
+
+                  <div class="row-popup loading" id="btce-data-loading">
+                      <h4>Loading data...</h4>
+                  </div>
+
+                  <div class="row-popup list" id="btce-data-container">
+                    <div class="row-popup header">
+                       <div class="col2 col3-heading ">TIME</div>
+                       <div class="col2 col4-heading">PRICE (<span id="btce_ticker_currency">USD</span>)</div>
+                       <div class="col2 col5-heading">EMA (<span class="ema_short">a</span>)</div>
+                       <div class="col2 col6-heading">EMA (<span class="ema_long">b</span>)</div>
+                       <div class="col2 col7-heading">DIFF</div>
+                    </div>
+                  </div>
+              </div>
+
+              <div id="bitstamp" class="hide" style="display: none">
+                  <div class="row-popup border1">
+                      <div id="bitstamp-graph" style="width:465px; height:230px;"></div>
+                  </div>
+                  <div class="row-popup balance" id="bitstamp-balance">
+                      Balance = <span id="bitstamp_btc">0.00</span> BTC + <span id="bitstamp_fiat">0.00</span> USD</span>
+                  </div>
+
+                  <div class="row-popup loading" id="bitstamp-data-loading">
+                      <h4>Loading data...</h4>
+                  </div>
+
+                  <div class="row-popup list" id="bitstamp-data-container">
+                    <div class="row-popup header">
+                       <div class="col2 col3-heading ">TIME</div>
+                       <div class="col2 col4-heading">PRICE (<span id="bitstamp_ticker_currency">USD</span>)</div>
+                       <div class="col2 col5-heading">EMA (<span class="ema_short">a</span>)</div>
+                       <div class="col2 col6-heading">EMA (<span class="ema_long">b</span>)</div>
+                       <div class="col2 col7-heading">DIFF</div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+
+          </div>
+      </div>
+    </div>
+    <script src="js/popup.js"></script>
+  </body>
+</html>

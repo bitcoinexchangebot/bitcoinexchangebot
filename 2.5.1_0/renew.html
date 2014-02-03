@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script src="js/jquery-2.0.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/renew.js"></script>
+        <script src="js/strftime.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="wrapper-1">
+          <div class="wrapper-inner">
+            <div class="logo"><img src="img/logo.png" width="275" height="57" border="0" /></div>
+          </div>
+        </div>
+
+        <div class="wrapper-content clearfix">
+          <div class="wrapper-inner">
+            <div class="content border settings" id="renew">
+                <div class="row">
+                    <h2>Renew Subscription</h2>
+                </div>
+
+                <div class="row">
+                    Please buy a renewal code on <a href="http://www.butter-bot.com" target="_blank">http://www.butter-bot.com</a> and enter it in the form below.
+                </div>
+
+                <div class="row pad-top-4">
+                    <form class="">
+                        <div class="row">
+                          <label for="renewal_code">Renewal code</label>
+                        <input type="text" class="input-medium" id="renewal_code" class="tipify" data-html="true" data-placement="right" data-trigger="focus" title="Your renewal code you got from us via email after your purchase.">
+                        </div>
+                    </form>
+                    <div id="error" style="display: none" class="alert alert-error"></div>
+                </div>
+              <div class="row">
+                <label>&nbsp;</label>
+                <a href="options.html" class="btn-rest">Cancel</a>
+                <input type="submit" class="btn-apply-1" id="activate" value="Activate"/>
+              </div>
+
+            </div>
+              <div id="success" class="content border settings" style="display:none">
+                  <div class="row">
+                      <h1>Success</h1>
+                  </div>
+
+                  <div class="row">
+                      Your renewal code was succesfully activated. Your subscription now expires on <span id="expires"></span>.
+                  </div>
+                  <div class="row">
+                      Back to <a href="options.html">options</a>.
+                  </div>
+              </div>
+            </div>
+        </div>
+    </body>
+</html>

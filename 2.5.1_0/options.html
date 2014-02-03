@@ -1,0 +1,618 @@
+<html>
+    <head>
+        <script src="js/jquery-2.0.0.min.js" xmlns="http://www.w3.org/1999/html"></script>
+        <script src="js/organictabs.jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/options.js"></script>
+        <script src="js/backtesting.js"></script>
+        <script type="text/javascript" src="EJSChart/EJSChart.js"></script>
+        <script src="js/graph.js"></script>
+        <script src="js/strftime.js"></script>
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/screen.css" rel="stylesheet" type="text/css" media="screen" />
+
+        <title>Bitcoin Exchange Bot</title>
+    </head>
+    <body>
+        <div class="wrapper-1">
+          <div class="wrapper-inner">
+            <div class="logo"><img src="img/logo.png" border="0" /></div>
+          </div>
+        </div>
+
+
+        <div class="wrapper-content clearfix">
+          <div class="wrapper-inner">
+            <div class="content">
+              <div class="left">
+                <div id="tab" class="settings">
+                  <ul class="nav">
+                    <li class="nav-one"><a href="#bot" class="current">Bot</a></li>
+                    <li class="nav-one"><a href="#engine">Engine</a><span>|</span></li>
+                    <li class="nav-two"><a href="#email">Email</a><span>|</span></li>
+                    <li class="nav-three"><a href="#mtgox">MtGox</a><span>|</span></li>
+                    <li class="nav-four "><a href="#btc-e">BTC-e</a><span>|</span></li>
+                    <li class="nav-five last"><a href="#bitstamp">Bitstamp</a><span>|</span></li>
+                  </ul>
+                  <div class="list-wrap">
+                    <div id="bot">
+                      <div class="border">
+                        <form action="#" method="post">
+                          <div class="row">
+                            <label for="api_key">License Key</label>
+                            <input type="text" class="input-1 tipify" id="api_key" data-html="true" data-placement="right" data-trigger="focus" title="Your API key you got from us via email." />
+                          </div>
+
+                          <div id="license" style="display: none">
+                              <div class="row" id="license_status">
+                                <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                                <p class="p"> Licensed to <span class="font" id="licensed_to"></span><br />
+                                  Expires on <span id="expires" class="font"></span></p>
+                              </div>
+                              <div class="row" id="renewal_link">
+                                <label style="margin:0px 10px 0px 0px;">&nbsp;</label>
+                                <span id="license_expired" style="display: none;">Your license key expired.</span><a href="renew.html">Renew</a>
+                              </div>
+                            </div>
+                        <div class="row">
+                          <label for="table_length">Show Last </label>
+                          <select class="select-1" id="table_length">
+                            <option value="6">6 entries</option>
+                            <option value="12">12 entries</option>
+                            <option value="24">24 entries</option>
+                            <option value="48">48 entries</option>
+                            <option value="72">72 entries</option>
+                            <option value="96">96 entries</option>
+                            <option value="120">120 entries</option>
+                          </select>
+                        </div>
+                        <div class="row">
+                          <label for="main_exchange">Main exchange</label>
+                          <select class="select-1 tipify" id="main_exchange" data-trigger="focus" data-html="true" data-placement="right" title="The diff value of this exchange will be used for the status icon and the according tab will be opened in the popup. ">
+                            <option value="mtgox">MtGox</option>
+                            <option value="btce">BTC-e</option>
+                            <option value="bitstamp">Bitstamp</option>
+                          </select>
+                        </div>
+                        <div class="row">
+                          <label>&nbsp;</label>
+                          <input type="reset" class="btn-rest" value="Reset"/>
+                          <input type="submit" class="btn-apply-1" value="Apply"/>
+                          <span class="saved_status">Saved!</span>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+
+
+
+
+                    <div id="engine" class="hide">
+                      <div class="border">
+                        <form action="#" method="post">
+                          <div class="row">
+                            <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                            <label class="wide" style="margin:0px 10px 0px 0px;">
+                                <input type="checkbox" id="disable_trading" />
+                                &nbsp;Disable Trading Engine
+                            </label>
+                          </div>
+                          <div class="row">
+                            <label for="ema_short_val">Short EMA</label>
+                            <input type="text" class="input-2 tipify" id="ema_short_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                               when the absolute difference between two EMA values (expressed in %)
+                               holds above the <b>Threshold</b> for the last two ticks (hours)." />
+                            <label for="ema_long_val">Long EMA</label>
+                            <input type="text" class="input-2 tipify" id="ema_long_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                 when the absolute difference between two EMA values (expressed in %)
+                                 holds above the <b>Threshold</b> for the last two ticks (hours)."/>
+                          </div>
+                          <div class="row">
+                            <label for="tick_interval">Trade Frequency </label>
+                              <select id="tick_interval" class="select-1" >
+                                  <option value="86400">1 day</option>
+                                  <option value="43200">12 hour</option>
+                                  <option value="21600">6 hour</option>
+                                  <option value="7200">2 hour</option>
+                                  <option value="3600">1 hour</option>
+                                  <option value="1800">30 minutes</option>
+                                  <option value="900">15 minutes</option>
+                                  <option value="300">5 minutes</option>
+                                    <option value="60">1 minute</option>
+                              </select>
+                          </div>
+                          <div class="row">
+                              <label for="offset">Tick Offset</label>
+                              <input type="text" class="input-2 tipify" id="offset"  data-html="true" data-placement="right" data-trigger="focus" title="Moves the tick back (negative values) or further (positive values) by the given amount of minutes. A value of '2' will make the bot tick at 20:02, 21:02 etc. instead of 20:00, 21:00..."/>
+                              <span class="after-label">minute(s)</span>
+                          </div>
+                          <div class="row">
+                            <label for="buy_threshold_1">Buy Threshold 1</label>
+                            <input type="text" class="input-3" id="buy_threshold_1" />
+                            <label for="buy_threshold_2">Buy Threshold 2</label>
+                            <input type="text" class="input-3" id="buy_threshold_2" />
+                          </div>
+                          <div class="row">
+                            <label for="sell_threshold_1">Sell Threshold 1</label>
+                            <input type="text" class="input-3" id="sell_threshold_1" />
+                            <label for="sell_threshold_2">Sell Threshold 2</label>
+                            <input type="text" class="input-3" id="sell_threshold_2"/>
+                          </div>
+                          <div class="row">
+                            <label for="stoploss">Trailing Stop Loss</label>
+                            <input type="text" class="input-3 tipify" id="stoploss" data-html="true" data-placement="right" data-trigger="focus" title="<strong>Use with caution!</strong><br/>The bot will <u>sell all bitcoins</u> except the reserve and <u>disable trading</u> on the according exchange once the price falls the given amount below the maximum price since start or last buy order. Leave blank for no Trailing Stop Loss trading."/>
+                              <a href="#" id="test">Test your settings</a>
+                          </div>
+                            <div class="row">
+                              <label>&nbsp;</label>
+                              <input type="reset" class="btn-rest" value="Reset"/>
+                              <input type="submit" class="btn-apply-1" value="Apply"/>
+                              <span class="saved_status">Saved!</span>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+
+
+
+
+
+
+
+                    <div id="email" class="hide">
+                      <div class="border">
+                        <form action="#" method="post">
+                          <div class="row">
+                            <label for="mail_to">Mail To</label>
+                            <input type="text" class="input-1" placeholder="Recipient" id="mail_to"/>
+                          </div>
+                          <div class="row">
+                            <label>Send mails when</label>
+                            <ul class="ul">
+                              <li>
+                                <label class="wide">
+                                    <input type="checkbox" id="mail_on_order_imminent" />
+                                    &nbsp;Orders are imminent</li>
+                                </label>
+                              <li>
+                                <label class="wide">
+                                    <input type="checkbox" id="mail_on_order_triggered"/>
+                                    &nbsp;Orders are triggered</li>
+                                </label>
+                            </ul>
+                          </div>
+                          <div class="row">
+                            <label>&nbsp;</label>
+                            <input type="reset" class="btn-rest" value="Reset"/>
+                            <input type="submit" value="Apply" class="btn-apply-1" />
+                            <span class="saved_status">Saved!</span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div id="mtgox" class="hide">
+                      <div class="border">
+                        <form action="#" method="post">
+                            <div class="row">
+                              <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                              <label class="wide" style="margin:0px 10px 0px 0px;">
+                                  <input type="checkbox" id="mtgox_disabled" />
+                                  &nbsp;Disable Trading on MtGox
+                              </label>
+                            </div>
+                          <div class="row">
+                            <label for="mtgox_key">MtGox API Key</label>
+                            <input type="text" class="input-1 tipify" placeholder="" id="mtgox_key" data-html="true" data-placement="right" data-trigger="focus" title="Take <b>API Key</b> and <b>Secret</b> from your MtGox account.
+                               Use <b>Advanced API Key Creation</b> at <a href='https://mtgox.com/security' target='_blank'>Security Center</a> page to create these values.
+                               Make sure to grant only <b>get_info</b> and <b>trade</b> access rights for this API key.
+                               The bot does not need you to be logged at the MtGox account - just setup the Key&Secret, leave the browser running and it will trade.">
+                          </div>
+                          <div class="row">
+                            <label for="mtgox_secret">MtGox API Secret</label>
+                            <input type="password" class="input-1 tipify" id="mtgox_secret" data-html="true" data-placement="right" data-trigger="focus" title="Take <b>API Key</b> and <b>Secret</b> from your MtGox account.
+                                 Use <b>Advanced API Key Creation</b> at <a href='https://mtgox.com/security' target='_blank'>Security Center</a> page to create these values.
+                                 Make sure to grant only <b>get_info</b> and <b>trade</b> access rights for this API key.
+                                 The bot does not need you to be logged at the MtGox account - just setup the Key&Secret, leave the browser running and it will trade..."></textarea>
+                          </div>
+                          <div class="row">
+                            <label for="mtgox_currency">Currency </label>
+                            <select class="select-1 tipify" id="mtgox_currency" data-html="true" data-placement="right" data-trigger="focus" title="Please note that for low-volume currencies (e.g. GBP) the USD prices are used for trend detection. Due to the low volume the orders done by the bot might also be less profitable as with the main currencies.">
+                              <option value="USD">USD</option>
+                              <option value="EUR">EUR</option>
+                              <option value="GBP">GBP</option>
+                            </select>
+                          </div>
+                          <div class="row">
+                            <label for="mtgox_fiat_reserve">FIAT reserve</label>
+                            <input type="text" class="input-5 input-usd tipify" id="mtgox_fiat_reserve" data-html="true" data-placement="right" data-trigger="focus" title="Amount of FIAT to keep untouched while trading. Please note that the actual amount of FIAT that is kept can vary slightly due to limitations of the MtGox API."/>
+                          </div>
+                          <div class="row">
+                            <label for="mtgox_btc_reserve">Bitcoin reserve</label>
+                            <input type="text" class="input-5 input-btc tipify" id="mtgox_btc_reserve" data-html="true" data-placement="right" data-trigger="focus" title="Amount of Bitcoins to keep untouched while trading."/>
+                          </div>
+                            <div class="row">
+                              <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                              <label class="wide" style="margin:0px 10px 0px 0px;">
+                                  <input type="checkbox" id="mtgox_override" />
+                                  &nbsp;Override global settings
+                              </label>
+                            </div>
+                            <div id="mtgox_override_settings" style="display:none">
+                                <div class="row">
+                                  <label for="ema_short_val">Short EMA</label>
+                                  <input type="text" class="input-2 tipify" id="mtgox_ema_short_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                     when the absolute difference between two EMA values (expressed in %)
+                                     holds above the <b>Threshold</b> for the last two ticks (hours)." />
+                                  <label for="ema_long_val">Long EMA</label>
+                                  <input type="text" class="input-2 tipify" id="mtgox_ema_long_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                       when the absolute difference between two EMA values (expressed in %)
+                                       holds above the <b>Threshold</b> for the last two ticks (hours)."/>
+                                </div>
+                                <div class="row">
+                                  <label for="tick_interval">Trade Frequency </label>
+                                    <select id="mtgox_tick_interval" class="select-1" >
+                                        <option value="86400">1 day</option>
+                                        <option value="43200">12 hour</option>
+                                        <option value="21600">6 hour</option>
+                                        <option value="7200">2 hour</option>
+                                        <option value="3600">1 hour</option>
+                                        <option value="1800">30 minutes</option>
+                                        <option value="900">15 minutes</option>
+                                        <option value="300">5 minutes</option>
+                                          <option value="60">1 minute</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <label for="offset">Tick Offset</label>
+                                    <input type="text" class="input-2 tipify" id="mtgox_offset"  data-html="true" data-placement="right" data-trigger="focus" title="Moves the tick back (negative values) or further (positive values) by the given amount of minutes. A value of '2' will make the bot tick at 20:02, 21:02 etc. instead of 20:00, 21:00..."/>
+                                    <span class="after-label">minute(s)</span>
+                                </div>
+                                <div class="row">
+                                  <label for="buy_threshold_1">Buy Threshold 1</label>
+                                  <input type="text" class="input-3" id="mtgox_buy_threshold_1" />
+                                  <label for="buy_threshold_2">Buy Threshold 2</label>
+                                  <input type="text" class="input-3" id="mtgox_buy_threshold_2" />
+                                </div>
+                                <div class="row">
+                                  <label for="sell_threshold_1">Sell Threshold 1</label>
+                                  <input type="text" class="input-3" id="mtgox_sell_threshold_1" />
+                                  <label for="sell_threshold_2">Sell Threshold 2</label>
+                                  <input type="text" class="input-3" id="mtgox_sell_threshold_2"/>
+                                </div>
+                                <div class="row">
+                                  <label for="stoploss">Trailing Stop Loss</label>
+                                  <input type="text" class="input-3 tipify" id="mtgox_stoploss" data-html="true" data-placement="right" data-trigger="focus" title="<strong>Use with caution!</strong><br/>The bot will <u>sell all bitcoins</u> except the reserve and <u>disable trading</u> on the according exchange once the price falls the given amount below the maximum price since start or last buy order. Leave blank for no Trailing Stop Loss trading."/>
+                                </div>
+                            </div>
+                          <div class="row">
+                            <label>&nbsp;</label>
+                            <input type="reset" class="btn-rest" value="Reset" />
+                            <input type="submit" value="Apply" class="btn-apply-1" />
+                            <span class="saved_status">Saved!</span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+
+
+
+
+
+                    <div id="btc-e"  class="hide">
+                      <div class="border">
+                        <form action="#" method="post">
+                            <div class="row">
+                              <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                              <label class="wide" style="margin:0px 10px 0px 0px;">
+                                  <input type="checkbox" id="btce_disabled" />
+                                  &nbsp;Disable Trading on BTC-e
+                              </label>
+                            </div>
+                          <div class="row">
+                            <label for="btce_key">BTC-e API Key</label>
+                            <input type="text" class="input-1" placeholder="" id="btce_key" />
+                          </div>
+                          <div class="row">
+                            <label for="btce_secret">BTC-e API Secret</label>
+                            <input type="password" class="input-1" id="btce_secret"></textarea>
+                          </div>
+                          <div class="row">
+                            <label for="btce_fiat_reserve">FIAT reserve</label>
+                            <input type="text" class="input-5 input-usd tipify" id="btce_fiat_reserve" data-html="true" data-placement="right" data-trigger="focus" title="Amount of FIAT to keep untouched while trading. Please note that the actual amount of FIAT that is kept can vary slightly due to limitations of the BTC-e API."/>
+                          </div>
+                          <div class="row">
+                            <label for="btce_btc_reserve">Bitcoin reserve</label>
+                            <input type="text" class="input-5 input-btc tipify" id="btce_btc_reserve" data-html="true" data-placement="right" data-trigger="focus" title="Amount of Bitcoins to keep untouched while trading."/>
+                          </div>
+                            <div class="row">
+                              <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                              <label class="wide" style="margin:0px 10px 0px 0px;">
+                                  <input type="checkbox" id="btce_override" />
+                                  &nbsp;Override global settings
+                              </label>
+                            </div>
+                            <div id="btce_override_settings" style="display:none">
+                                <div class="row">
+                                  <label for="ema_short_val">Short EMA</label>
+                                  <input type="text" class="input-2 tipify" id="btce_ema_short_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                     when the absolute difference between two EMA values (expressed in %)
+                                     holds above the <b>Threshold</b> for the last two ticks (hours)." />
+                                  <label for="ema_long_val">Long EMA</label>
+                                  <input type="text" class="input-2 tipify" id="btce_ema_long_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                       when the absolute difference between two EMA values (expressed in %)
+                                       holds above the <b>Threshold</b> for the last two ticks (hours)."/>
+                                </div>
+                                <div class="row">
+                                  <label for="tick_interval">Trade Frequency </label>
+                                    <select id="btce_tick_interval" class="select-1" >
+                                        <option value="86400">1 day</option>
+                                        <option value="43200">12 hour</option>
+                                        <option value="21600">6 hour</option>
+                                        <option value="7200">2 hour</option>
+                                        <option value="3600">1 hour</option>
+                                        <option value="1800">30 minutes</option>
+                                        <option value="900">15 minutes</option>
+                                        <option value="300">5 minutes</option>
+                                          <option value="60">1 minute</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <label for="offset">Tick Offset</label>
+                                    <input type="text" class="input-2 tipify" id="btce_offset"  data-html="true" data-placement="right" data-trigger="focus" title="Moves the tick back (negative values) or further (positive values) by the given amount of minutes. A value of '2' will make the bot tick at 20:02, 21:02 etc. instead of 20:00, 21:00..."/>
+                                    <span class="after-label">minute(s)</span>
+                                </div>
+                                <div class="row">
+                                  <label for="buy_threshold_1">Buy Threshold 1</label>
+                                  <input type="text" class="input-3" id="btce_buy_threshold_1" />
+                                  <label for="buy_threshold_2">Buy Threshold 2</label>
+                                  <input type="text" class="input-3" id="btce_buy_threshold_2" />
+                                </div>
+                                <div class="row">
+                                  <label for="sell_threshold_1">Sell Threshold 1</label>
+                                  <input type="text" class="input-3" id="btce_sell_threshold_1" />
+                                  <label for="sell_threshold_2">Sell Threshold 2</label>
+                                  <input type="text" class="input-3" id="btce_sell_threshold_2"/>
+                                </div>
+                                <div class="row">
+                                  <label for="stoploss">Trailing Stop Loss</label>
+                                  <input type="text" class="input-3 tipify" id="btce_stoploss" data-html="true" data-placement="right" data-trigger="focus" title="<strong>Use with caution!</strong><br/>The bot will <u>sell all bitcoins</u> except the reserve and <u>disable trading</u> on the according exchange once the price falls the given amount below the maximum price since start or last buy order. Leave blank for no Trailing Stop Loss trading."/>
+                                </div>
+                            </div>
+                          <div class="row">
+                            <label>&nbsp;</label>
+                            <input type="reset" class="btn-rest" value="Reset" />
+                            <input type="submit" value="Apply" class="btn-apply-1" />
+                            <span class="saved_status">Saved!</span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div id="bitstamp"  class="hide">
+                      <div class="border">
+                        <form action="#" method="post">
+                            <div class="row">
+                              <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                              <label class="wide" style="margin:0px 10px 0px 0px;">
+                                  <input type="checkbox" id="bitstamp_disabled" />
+                                  &nbsp;Disable Trading on Bitstamp
+                              </label>
+                            </div>
+                          <div class="row">
+                            <label for="bitstamp_client_id">Bitstamp Client ID</label>
+                            <input type="text" class="input-1" placeholder="" id="bitstamp_client_id" />
+                          </div>
+                          <div class="row">
+                            <label for="bitstamp_key">Bitstamp API Key</label>
+                            <input type="text" class="input-1" placeholder="" id="bitstamp_key" />
+                          </div>
+                          <div class="row">
+                            <label for="bitstamp_secret">Bitstamp API Secret</label>
+                              <input type="password" class="input-1" placeholder="" id="bitstamp_secret" />
+                          </div>
+                          <div class="row">
+                            <label for="bitstamp_fiat_reserve">FIAT reserve</label>
+                            <input type="text" class="input-5 input-usd tipify" id="bitstamp_fiat_reserve" data-html="true" data-placement="right" data-trigger="focus" title="Amount of FIAT to keep untouched while trading. Please note that the actual amount of FIAT that is kept can vary slightly due to limitations of the Bitstamp API."/>
+                          </div>
+                          <div class="row">
+                            <label for="bitstamp_btc_reserve">Bitcoin reserve</label>
+                            <input type="text" class="input-5 input-btc tipify" id="bitstamp_btc_reserve" data-html="true" data-placement="right" data-trigger="focus" title="Amount of Bitcoins to keep untouched while trading."/>
+                          </div>
+                            <div class="row">
+                              <label style="margin:0px 10px 0px 0px ;">&nbsp;</label>
+                              <label class="wide" style="margin:0px 10px 0px 0px;">
+                                  <input type="checkbox" id="bitstamp_override" />
+                                  &nbsp;Override global settings
+                              </label>
+                            </div>
+                            <div id="bitstamp_override_settings" style="display:none">
+                                <div class="row">
+                                  <label for="ema_short_val">Short EMA</label>
+                                  <input type="text" class="input-2 tipify" id="bitstamp_ema_short_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                     when the absolute difference between two EMA values (expressed in %)
+                                     holds above the <b>Threshold</b> for the last two ticks (hours)." />
+                                  <label for="ema_long_val">Long EMA</label>
+                                  <input type="text" class="input-2 tipify" id="bitstamp_ema_long_val" data-html="true" data-placement="right" data-trigger="focus" title="The bot will buy or sell <u>all the bitcoins</u> at the given exchange
+                                       when the absolute difference between two EMA values (expressed in %)
+                                       holds above the <b>Threshold</b> for the last two ticks (hours)."/>
+                                </div>
+                                <div class="row">
+                                  <label for="tick_interval">Trade Frequency </label>
+                                    <select id="bitstamp_tick_interval" class="select-1" >
+                                        <option value="86400">1 day</option>
+                                        <option value="43200">12 hour</option>
+                                        <option value="21600">6 hour</option>
+                                        <option value="7200">2 hour</option>
+                                        <option value="3600">1 hour</option>
+                                        <option value="1800">30 minutes</option>
+                                        <option value="900">15 minutes</option>
+                                        <option value="300">5 minutes</option>
+                                          <option value="60">1 minute</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <label for="offset">Tick Offset</label>
+                                    <input type="text" class="input-2 tipify" id="bitstamp_offset"  data-html="true" data-placement="right" data-trigger="focus" title="Moves the tick back (negative values) or further (positive values) by the given amount of minutes. A value of '2' will make the bot tick at 20:02, 21:02 etc. instead of 20:00, 21:00..."/>
+                                    <span class="after-label">minute(s)</span>
+                                </div>
+                                <div class="row">
+                                  <label for="buy_threshold_1">Buy Threshold 1</label>
+                                  <input type="text" class="input-3" id="bitstamp_buy_threshold_1" />
+                                  <label for="buy_threshold_2">Buy Threshold 2</label>
+                                  <input type="text" class="input-3" id="bitstamp_buy_threshold_2" />
+                                </div>
+                                <div class="row">
+                                  <label for="sell_threshold_1">Sell Threshold 1</label>
+                                  <input type="text" class="input-3" id="bitstamp_sell_threshold_1" />
+                                  <label for="sell_threshold_2">Sell Threshold 2</label>
+                                  <input type="text" class="input-3" id="bitstamp_sell_threshold_2"/>
+                                </div>
+                                <div class="row">
+                                  <label for="stoploss">Trailing Stop Loss</label>
+                                  <input type="text" class="input-3 tipify" id="bitstamp_stoploss" data-html="true" data-placement="right" data-trigger="focus" title="<strong>Use with caution!</strong><br/>The bot will <u>sell all bitcoins</u> except the reserve and <u>disable trading</u> on the according exchange once the price falls the given amount below the maximum price since start or last buy order. Leave blank for no Trailing Stop Loss trading."/>
+                                </div>
+                            </div>
+                          <div class="row">
+                            <label>&nbsp;</label>
+                            <input type="reset" class="btn-rest" value="Reset" />
+                            <input type="submit" value="Apply" class="btn-apply-1" />
+                            <span class="saved_status">Saved!</span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END List Wrap -->
+
+                </div>
+              </div>
+              <div class="pull-right">
+                <div id="graph-img" style="margin-left: 10px; width:420px; height:280px"></div>
+                <div id="referral" class="border description" >
+                  <h3>Earn a FREE One Month subscription extension</h3>
+                  <p>for you and whoever you refer each time you introduce someone new to our product.</p>
+                  <p>Just give them this URL and you will both get your reward after a successful purchase:</p>
+                  <p><span id="referral_link"></span></p>
+                </div>
+              </div>
+
+
+              <div id="backtesting-container" style="display: none"></div>
+              <div id="backtesting" class="border settings" style="display: none">
+                  <div class="border">
+                    <form action="#" method="post">
+                      <div class="row">
+                        <label for="ema_short_val">Short EMA</label>
+                        <input type="text" class="input-2" id="test_ema_short_val" />
+                        <label for="ema_long_val">Long EMA</label>
+                        <input type="text" class="input-2" id="test_ema_long_val" />
+                      </div>
+                      <div class="row">
+                        <label for="tick_interval">Trade Frequency </label>
+                          <select id="test_tick_interval" class="select-1" >
+                              <option value="86400">1 day</option>
+                              <option value="43200">12 hour</option>
+                              <option value="21600">6 hour</option>
+                              <option value="7200">2 hour</option>
+                              <option value="3600">1 hour</option>
+                              <option value="1800">30 minutes</option>
+                              <option value="900">15 minutes</option>
+                              <option value="300">5 minutes</option>
+                                <option value="60">1 minute</option>
+                          </select>
+                      </div>
+                        <div class="row">
+                            <label for="offset">Tick Offset</label>
+                            <input type="text" class="input-2" id="test_offset"/>
+                            <span class="after-label">minute(s)</span>
+                        </div>
+                      <div class="row">
+                        <label for="test_buy_threshold_1">Buy Threshold 1</label>
+                        <input type="text" class="input-3" id="test_buy_threshold_1" />
+                        <label for="test_buy_threshold_2">Buy Threshold 2</label>
+                        <input type="text" class="input-3" id="test_buy_threshold_2" />
+                      </div>
+                      <div class="row">
+                        <label for="test_sell_threshold_1">Sell Threshold 1</label>
+                        <input type="text" class="input-3" id="test_sell_threshold_1" />
+                        <label for="test_sell_threshold_2">Sell Threshold 2</label>
+                        <input type="text" class="input-3" id="test_sell_threshold_2"/>
+                      </div>
+                        <div class="row">
+                          <label for="test_fee">Trade fee</label>
+                          <input type="text" class="input-2" id="test_fee" />
+                          <label for="start_fund">Starting fund</label>
+                          <input type="text" class="input-5 input-usd" id="start_fund" />
+                        </div>
+                        <div class="row">
+                          <label for="tick_interval">Test duration </label>
+                            <select id="test_duration" class="select-1" >
+                                <option value="7">1 week</option>
+                                <option value="30">1 month</option>
+                                <option value="60">2 months</option>
+                                <option value="90">3 months</option>
+                                <option value="182">6 months</option>
+                                <option value="365">1 year</option>
+                                <option value="730">2 years</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                          <label for="backtesting_exchange">Exchange</label>
+                            <select id="backtesting_exchange" class="select-1" >
+                                <option value="mtgox">MtGox</option>
+                                <option value="bitstamp">Bitstamp</option>
+                                <option value="btce">BTC-e</option>
+                            </select>
+                        </div>
+                      <div class="row">
+                        <div style="float: left">
+                            <input type="submit" id="run_test" class="btn-test" value="Run test"/>
+                        </div>
+                        <div style="float: right">
+                            <input type="submit" id="test_close" class="btn-close" value="Discard"/>
+                            <input type="submit" id="test_apply" class="btn-apply" value="Apply & Close"/>
+                        </div>
+                      </div>
+                    </form>
+
+                    <div id="statistics"></div>
+                    <div id="backtesting_progress" style="display:none">
+                        Backtesting in progress...
+                    </div>
+                    <table class="row-popup list" id="result" style="display:none">
+                      <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Value</th>
+                            <th>Profit</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper-footer-inner">
+          <div class="wrapper-inner">
+            <div class="copy-right">Copyright &copy; 2014 BitcoinExchangeBot.com. All rights reserved.</div>
+          </div>
+        </div>
+
+    </body>
+</html>
